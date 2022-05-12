@@ -7,9 +7,9 @@ Suggest running this in cron every minute to ensure drbd does not remain out of 
   &nbsp;&nbsp;&nbsp;&nbsp;Add more lines for each resource you want to monitor<br>
   &nbsp;&nbsp;&nbsp;&nbsp;Example: */1 * * * * bash -l -c '/usr/local/bin/drbdwatch.sh r0:1' > /dev/null 2>&1
   
-Variables near the top of script can be tuned.  Here are the defaults:
-OOS_MAX=256000 #256KB
-SYNC_TIMEOUT=1800 #30 Minutes
+Variables near the top of script can be tuned.  Here are the defaults:<br>
+OOS_MAX=256000 #256KB<br>
+SYNC_TIMEOUT=1800 #30 Minutes<br>
   
 Configuration:<br>
   &nbsp;&nbsp;&nbsp;&nbsp;Edit LOGFILE and LOCKFILE variables if desired<br>
