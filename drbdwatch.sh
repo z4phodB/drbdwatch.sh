@@ -1,6 +1,7 @@
 #!/bin/bash
-RESOURCE=$1
-OOS=`cat /proc/drbd | grep ns:.*nr: | awk -F: '{print $NF}'`
+RESOURCE=`echo $1 | awk -F":" '{print $1}'`
+DRBD_NUM=`echo $1 | awk -F":" '{print $2}'`
+OOS=`cat /proc/drbd | grep -A 1 "^ *$DRBD_NUM:" | grep ns:.*nr: | awk -F: '{print $NF}'`
 STATE=`drbdadm status | grep $RESOURCE | awk -F: '{print $NF}'`
 OOS_MAX=256000
 SYNC_TIMEOUT=1800
