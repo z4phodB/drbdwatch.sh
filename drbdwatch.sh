@@ -2,6 +2,8 @@
 RESOURCE=$1
 OOS=`cat /proc/drbd | grep ns:.*nr: | awk -F: '{print $NF}'`
 STATE=`drbdadm status | grep $RESOURCE | awk -F: '{print $NF}'`
+OOS_MAX=256000
+SYNC_TIMEOUT=1800
 
 #Edit LOGFILE and LOCKFILE if desired //Note, LOCKFILE must include the resource variable to ensure uniqueness
 LOGFILE="/var/log/drbdwatch.log"
@@ -20,7 +22,7 @@ if [ -f $LOCKFILE ]; then
     echo "`date` [$RESOURCE][$OOS] Fully synced, removing lock." >> $LOGFILE
     rm $LOCKFILE
     exit
-  elif [ $DIFF -gt 1800 ]; then
+  elif [ $DIFF -gt $SYNC_TIMEOUT ]; then
     echo "`date` [$RESOURCE][$OOS] Out of Sync, sync already running. Time exceeded 30 minutes, bouncing $RESOURCE" >> $LOGFILE
     /sbin/drbdadm down $RESOURCE
     sleep 3
@@ -34,7 +36,7 @@ if [ -f $LOCKFILE ]; then
   fi
 fi
 
-if [ $OOS -gt 1000000 ]; then
+if [ $OOS -gt $OOS_MAX ]; then
 
   #If already run and out of sync exit
   if [ -f $LOCKFILE ]; then
