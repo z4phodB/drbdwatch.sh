@@ -1,6 +1,8 @@
 # drbdwatch.sh
 DRBD resource watchdog script to bounce resource on secondary node if its too far out of sync (oos) and stalled.
 
+Note: Uses /proc/drbd which is no longer used in DRBD version 9
+
 Usage: ./drbdwatch.sh &lt;resource name:/proc/drbd number&gt;
   
 Suggest running this in cron every minute to ensure drbd does not remain out of sync very long<br>
