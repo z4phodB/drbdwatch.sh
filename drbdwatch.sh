@@ -17,6 +17,7 @@ LOCKFILE="/tmp/.DRDBSYNC_$RESOURCE"
 
 if [ $STATE != "Secondary" ]; then
   echo "`date` [$OOS] We are not secondary node, exiting." >> $LOGFILE
+  exit
 fi
 
 #If sync lock file exists and no backlog, remove lock and exit
